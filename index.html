@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="백엔드·인프라에 강한 풀스택 개발자 윤경록의 경력 포트폴리오">
+<title>윤경록 포트폴리오</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap">
+<style>
+/* Layout: 한 열 문서형 + 넓은 구성도. 화면 위 '신호선'이 이 사람의 실무(생체신호·무중단 운영)를 상징한다 */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #141920;
+  --muted: #5b6573;
+  --line: #dde1e7;
+  --signal: #d9483b;      /* 심박 신호선 · 강조 1곳 */
+  --run: #1f8a6a;         /* 운영 중 상태 */
+  --node: #eef1f5;        /* 구성도 박스 */
+  --node-ink: #26303c;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Sans KR", Consolas, monospace;
+  --step--1: 0.86rem; --step-0: 1rem; --step-1: 1.2rem; --step-2: 1.55rem; --step-3: 2.2rem; --step-4: 3rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1217; --surface: #151b23; --ink: #e7ebf0; --muted: #96a1ae; --line: #27303b;
+    --signal: #ff6b5e; --run: #3cc39a; --node: #1c2430; --node-ink: #d7dee6; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1217; --surface: #151b23; --ink: #e7ebf0; --muted: #96a1ae; --line: #27303b;
+  --signal: #ff6b5e; --run: #3cc39a; --node: #1c2430; --node-ink: #d7dee6; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--step-0); line-height: 1.7;
+  padding: 0 20px; margin: 0;
+}
+.wrap { max-width: 920px; margin: 0 auto; padding-block: 48px 80px; display: grid; gap: 72px; }
+h1, h2, h3 { line-height: 1.3; text-wrap: balance; margin: 0; }
+h2 { font-size: var(--step-3); font-weight: 700; letter-spacing: -0.02em; }
+h3 { font-size: var(--step-1); font-weight: 600; }
+p { margin: 0; max-width: 65ch; }
+a { color: inherit; text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.mono { font-family: var(--font-mono); }
+.eyebrow { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); letter-spacing: 0.02em; }
+.lead { font-size: var(--step-1); color: var(--muted); }
+section { display: grid; gap: 24px; }
+.sec-head { display: grid; gap: 8px; }
+
+/* Hero */
+.hero { display: grid; gap: 20px; }
+.status { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: var(--step--1); color: var(--run); }
+.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--run); box-shadow: 0 0 0 4px color-mix(in srgb, var(--run) 20%, transparent); }
+.hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.03em; }
+.hero h1 span { display: block; font-size: var(--step-2); font-weight: 500; color: var(--muted); letter-spacing: -0.01em; margin-top: 6px; }
+.pulse { width: 100%; height: 64px; display: block; }
+.pulse path { fill: none; stroke: var(--signal); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.pulse .base { stroke: var(--line); stroke-width: 1; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.fact { background: var(--surface); padding: 16px; display: grid; gap: 2px; }
+.fact b { font-family: var(--font-mono); font-size: var(--step-2); font-weight: 700; font-variant-numeric: tabular-nums; }
+.fact span { font-size: var(--step--1); color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--font-mono); font-size: var(--step--1); }
+.links span { color: var(--muted); }
+@media (max-width: 680px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* 프로젝트 */
+.tag { font-family: var(--font-mono); font-size: 0.78rem; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); white-space: nowrap; }
+.tag.self { border-color: var(--signal); color: var(--signal); }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 680px) { .grid2 { grid-template-columns: 1fr; } }
+.block { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.block ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.block li::marker { color: var(--muted); }
+.stack { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+
+/* 구성도 */
+figure { margin: 0; display: grid; gap: 10px; }
+.diagram { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.diagram svg { display: block; min-width: 720px; width: 100%; height: auto; }
+.diagram .box { fill: var(--node); stroke: var(--line); }
+.diagram .hot { fill: var(--surface); stroke: var(--signal); }
+.diagram text { fill: var(--node-ink); font-family: var(--font-body); font-size: 13px; }
+.diagram .t-strong { font-weight: 600; font-size: 14px; }
+.diagram .t-mono { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+.diagram .wire { stroke: var(--muted); stroke-width: 1.4; fill: none; }
+.diagram .wire.alert { stroke: var(--signal); stroke-dasharray: 4 3; }
+.diagram marker path { fill: var(--muted); }
+.diagram #arrowAlert path { fill: var(--signal); }
+figcaption { font-size: var(--step--1); color: var(--muted); }
+
+/* 작성 예정 */
+.todo { border: 1px dashed var(--line); border-radius: 10px; padding: 16px 20px; color: var(--muted); font-size: var(--step--1); display: grid; gap: 4px; }
+.todo b { font-family: var(--font-mono); color: var(--ink); font-weight: 600; }
+
+/* 표 */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: var(--step--1); }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { white-space: nowrap; font-weight: 600; }
+
+/* 타임라인 (기타 실무) */
+.timeline { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 6px; }
+.tl { position: relative; padding: 0 0 22px 22px; display: grid; gap: 4px; }
+.tl::before { content: ""; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--muted); }
+.tl .when { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.skills { display: grid; gap: 10px; }
+.skill-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.skill-row:last-child { border-bottom: 0; }
+.skill-row dt { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.skill-row dd { margin: 0; }
+@media (max-width: 560px) { .skill-row { grid-template-columns: 1fr; gap: 2px; } }
+
+
+/* 트러블슈팅 사례 */
+.case { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; }
+.case-head { display: grid; gap: 8px; justify-items: start; }
+.case-body { margin: 0; display: grid; gap: 0; }
+.case-body > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+.case-body dt { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); padding-top: 2px; }
+.case-body dd { margin: 0; }
+.case-body ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.case-body > div:nth-child(4) dt { color: var(--signal); }
+@media (max-width: 560px) { .case-body > div { grid-template-columns: 1fr; gap: 4px; } }
+
+footer { border-top: 1px solid var(--line); padding-top: 24px; display: grid; gap: 8px; font-size: var(--step--1); color: var(--muted); }
+
+@media print {
+  body { padding: 0; background: #fff; color: #000; }
+  .wrap { padding-block: 0; gap: 40px; }
+  section, figure, .block { break-inside: avoid; }
+  .todo { display: none; }
+}
+
+/* ---- 경험 나열형 ---- */
+.toc { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: var(--step--1); }
+.toc a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
+.toc a:hover { color: var(--ink); }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 760px) { .grid3 { grid-template-columns: 1fr; } }
+.strength b { font-size: var(--step-1); line-height: 1.4; display: block; }
+.strength p { color: var(--muted); font-size: var(--step--1); }
+.principle { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.principle > div { background: var(--surface); padding: 16px; display: grid; gap: 4px; align-content: start; }
+.principle b { font-family: var(--font-mono); font-size: var(--step--1); color: var(--signal); }
+.principle span { font-size: var(--step--1); }
+@media (max-width: 760px) { .principle { grid-template-columns: 1fr 1fr; } }
+.story { border-left: 3px solid var(--signal); padding: 4px 0 4px 20px; display: grid; gap: 10px; }
+.story p { max-width: 70ch; }
+.story .quote { font-size: var(--step-1); font-weight: 600; line-height: 1.5; }
+
+.proj { display: grid; gap: 22px; padding-top: 28px; border-top: 2px solid var(--ink); }
+.proj-head { display: grid; gap: 8px; }
+.proj-head .org { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.part { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; }
+.part > h3 { font-family: var(--font-mono); font-size: var(--step--1); font-weight: 600; color: var(--muted); padding-top: 3px; }
+.part > div { display: grid; gap: 14px; min-width: 0; }
+.part ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+@media (max-width: 680px) { .part { grid-template-columns: 1fr; gap: 6px; } }
+.results { display: flex; flex-wrap: wrap; gap: 8px; }
+.result { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 12px; font-size: var(--step--1); }
+.result b { font-family: var(--font-mono); margin-right: 6px; }
+.lesson { display: grid; gap: 8px; }
+.lesson dl { margin: 0; display: grid; gap: 0; }
+.lesson dl > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); }
+.lesson dt { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.lesson dd { margin: 0; }
+@media (max-width: 560px) { .lesson dl > div { grid-template-columns: 1fr; gap: 4px; } }
+.dl-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; font-size: var(--step--1); justify-self: start; }
+.dl-btn:hover { opacity: 0.9; }
+@page { size: A4; margin: 14mm 13mm; }
+@media print {
+  html { font-size: 12.5px; }
+  .proj, #about { break-before: page; border-top: 0; padding-top: 0; }
+  .toc, .dl-btn { display: none; }
+  .diagram { overflow: visible; padding: 6px; }
+  .diagram svg { min-width: 0; }
+  .table-wrap { overflow: visible; }
+  table { min-width: 0; }
+  .block, figure, .principle, .story, .case-body > div, .lesson dl > div { break-inside: avoid; }
+  .part { display: block; }
+  .part > h3 { margin: 0 0 8px; padding: 0; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+  .part > div { display: block; }
+  .part > div > * + * { margin-top: 12px; }
+  .proj { gap: 18px; }
+  .facts { break-inside: avoid; }
+  a { text-decoration: none; }
+}
+
+/* ---- 문서형(워드) 스타일: 회색 바탕 위 흰 A4 용지, 움직임 없음 ---- */
+:root {
+  --bg: #e9eaed; --paper: #ffffff; --surface: #ffffff; --ink: #1d1d1f; --muted: #595959;
+  --line: #bfbfbf; --head: #1f3864; --signal: #2f5496; --run: #2f5496; --node: #f2f2f2; --node-ink: #262626;
+  --font-mono: var(--font-body);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1c1f; --paper: #26272b; --surface: #26272b; --ink: #e6e6e6; --muted: #a6a6a6;
+    --line: #4a4c52; --head: #9db4e0; --signal: #8fa9dc; --run: #8fa9dc; --node: #303136; --node-ink: #dcdcdc;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1c1f; --paper: #26272b; --surface: #26272b; --ink: #e6e6e6; --muted: #a6a6a6;
+  --line: #4a4c52; --head: #9db4e0; --signal: #8fa9dc; --run: #8fa9dc; --node: #303136; --node-ink: #dcdcdc;
+}
+body { padding: 32px 16px; line-height: 1.75; counter-reset: proj; }
+.wrap {
+  max-width: 860px; background: var(--paper); padding: 72px 80px; gap: 56px;
+  border: 1px solid var(--line); box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+@media (max-width: 680px) { body { padding: 0; } .wrap { padding: 32px 16px; border: 0; box-shadow: none; } }
+h2 { font-size: 1.6rem; letter-spacing: 0; color: var(--head); }
+h3 { color: var(--head); }
+.eyebrow { font-family: var(--font-body); letter-spacing: 0; }
+.hero { gap: 16px; padding-bottom: 28px; border-bottom: 3px double var(--ink); }
+.hero h1 { font-size: 2.4rem; letter-spacing: 0; }
+.hero h1 span { font-size: 1.1rem; font-weight: 400; }
+.status { color: var(--muted); }
+.status::before { display: none; }
+.pulse { display: none; }
+.facts, .principle, .block, .case, .diagram, .table-wrap, .result, .tag, .todo { border-radius: 0; }
+.facts { gap: 0; background: none; border-width: 1px 0 0 1px; }
+.fact { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+.fact b { font-size: 1.3rem; color: var(--head); }
+.links { font-size: var(--step--1); }
+.toc { display: block; border: 1px solid var(--line); padding: 14px 20px; counter-reset: toc; }
+.toc::before { content: "목차"; display: block; font-weight: 700; margin-bottom: 6px; }
+.toc a { display: block; border: 0; color: var(--ink); text-decoration: none; counter-increment: toc; }
+.toc a::before { content: counter(toc) ". "; }
+.toc a:hover { color: var(--ink); text-decoration: underline; }
+.block, .case { box-shadow: none; }
+.tag { border: 0; padding: 0; color: var(--muted); font-size: var(--step--1); }
+.tag + .tag::before { content: "· "; }
+.tag.self { color: var(--head); font-weight: 600; }
+.proj { border-top: 0; padding-top: 0; counter-increment: proj; }
+.proj-head h2 { padding-bottom: 6px; border-bottom: 1.5px solid var(--head); }
+.proj-head h2::before { content: counter(proj) ". "; }
+.part { display: block; }
+.part > h3 { font-family: var(--font-body); font-size: 1.05rem; font-weight: 700; color: var(--head); margin: 0 0 10px; padding: 0 0 4px; border-bottom: 1px solid var(--line); }
+.part > div { display: block; }
+.part > div > * + * { margin-top: 14px; }
+.principle span, .block p { overflow-wrap: anywhere; }
+.diagram svg { min-width: 640px; }
+.story { border-left: 0; padding: 16px 20px; background: var(--node); }
+th { font-family: var(--font-body); letter-spacing: 0; color: var(--ink); background: var(--node); }
+th, td { border: 1px solid var(--line); }
+.table-wrap { border: 0; }
+.tl::before { border-radius: 0; width: 8px; height: 8px; left: -5px; top: 10px; background: var(--muted); border: 0; }
+footer { border-top: 1px solid var(--ink); }
+.dl-btn { border-radius: 0; background: none; color: var(--head); border: 1px solid var(--head); }
+.dl-btn:hover { opacity: 1; background: var(--node); }
+@media print {
+  body { padding: 0; }
+  .wrap { max-width: none; padding: 0; border: 0; box-shadow: none; }
+  .hero { border-bottom: 3px double #000; }
+}
+
+/* ---- 사진 · 스크린샷 · 처리 흐름 · 실무/개인 구분 ---- */
+.hero-top { display: flex; gap: 24px; align-items: flex-start; justify-content: space-between; }
+.hero-top h1 { flex: 1; min-width: 0; }
+.photo { width: 120px; height: 144px; object-fit: cover; border: 1px solid var(--line); flex: none; }
+@media (max-width: 560px) { .photo { width: 88px; height: 106px; } }
+.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0; }
+.shots figure { gap: 6px; }
+.shots img, .wide-shot { width: 100%; height: auto; display: block; border: 1px solid var(--line); }
+.shots figcaption b { color: var(--ink); font-weight: 600; margin-right: 6px; }
+@media (max-width: 680px) { .shots { grid-template-columns: 1fr; } }
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: var(--step--1); }
+.flow span { border: 1px solid var(--line); padding: 6px 10px; background: var(--surface); }
+.flow span.hot { border-color: var(--head); color: var(--head); font-weight: 600; }
+.flow i { font-style: normal; color: var(--muted); }
+.kind { display: inline-block; font-size: 0.75rem; padding: 1px 6px; border: 1px solid var(--line); color: var(--muted); margin-right: 6px; white-space: nowrap; }
+.kind.work { background: var(--node); color: var(--ink); }
+.kind.mine { border-color: var(--head); color: var(--head); }
+td .mine-tech { color: var(--muted); }
+@media print { .shots figure, .flow { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="status">백엔드 · 프론트 · 인프라 · AI</div>
+    <div class="hero-top">
+      <h1>윤경록<span>백엔드 · 프론트 · 인프라 · AI까지 직접 다루는, 백엔드·인프라에 강한 풀스택 개발자</span></h1>
+      <img class="photo" src="img/profile.jpg" alt="윤경록 프로필 사진">
+    </div>
+    <p class="lead">센서 데이터 수집부터 관제 화면, 클라우드 인프라까지 직접 만들어 온 풀스택 개발자입니다. Java·Python·NestJS 백엔드, React 화면, AWS·Docker 인프라부터 YOLO·Kubeflow·Gemini까지 필요한 기술을 익혀 실무에 적용해 왔습니다. 문제의 원인을 끝까지 파고들고, 누구나 이어받을 수 있게 기록하고 자동화합니다.</p>
+    <div class="facts">
+      <div class="fact"><b>5개국+</b><span>나라별 수집 서버 운영<br>(한국·영국·UAE·일본·독일 등)</span></div>
+      <div class="fact"><b>5만 대</b><span>가상 센서 48시간 부하테스트<br>누락률 1% 미만</span></div>
+      <div class="fact"><b>−30%</b><span>Saving Plan으로<br>연간 EC2 비용 절감</span></div>
+      <div class="fact"><b>−82%</b><span>Spot으로<br>부하테스트 비용 절감</span></div>
+    </div>
+    <div class="links">
+      <a href="https://github.com/ygrhash">github.com/ygrhash</a>
+      <a href="https://aiops.ygrhash.dev/dashboard/">aiops.ygrhash.dev</a>
+      <span>tjsal89000@naver.com</span>
+      <span>010-2967-2625</span>
+    </div>
+    <a class="dl-btn" href="윤경록_포트폴리오.pdf" download>PDF 포트폴리오 다운로드 ↓</a>
+    <nav class="toc" aria-label="목차">
+      <a href="#career">이력</a><a href="#about">강점</a><a href="#stack">기술 스택</a><a href="#ai">AI 활용</a><a href="#mckare">맥케어 플랫폼</a><a href="#yard">야드 관제</a><a href="#qr">QR 인식</a><a href="#kcloud">K-Cloud</a><a href="#vision">비전 검사</a><a href="#aiops">개인 프로젝트</a><a href="#motivation">일하는 이유</a>
+    </nav>
+  </header>
+
+  <section id="career">
+    <div class="sec-head">
+      <div class="eyebrow">이력</div>
+      <h2>경력 3곳, 학력, 개인 프로젝트</h2>
+    </div>
+    <div class="lesson"><dl>
+      <div><dt>2025.06 – 2026.08</dt><dd><b>그랜드파워솔루션 · 주임연구원</b> (SI / 풀스택 개발 / 서버관리)<br>한화오션 절단공장 야드 관제 · 한화오션 전처리 공장 QR 인식 · K-Cloud GPU 할당 Cloud IDE</dd></div>
+      <div><dt>2022.01 – 2025.05</dt><dd><b>(주)제이씨에프테크놀러지 · 주임연구원</b> (풀스택 개발 / 서버관리)<br>맥케어 생체신호 모니터링 플랫폼 초기 구축 · 운영, 관제 대시보드, AWS · 온프레미스 서버 구축 · 운영</dd></div>
+      <div><dt>2020.11 – 2021.02</dt><dd><b>한국지능기계 · 학생 체험형 인턴</b><br>차량부품 비전 불량 검사</dd></div>
+      <div><dt>학력</dt><dd><b>동명대학교 컴퓨터공학과 학사</b> (2014.02 – 2022.03)<br>졸업 작품: 사용자 맞춤형 홈케어 시스템 (STT · TTS · IoT 센서)</dd></div>
+      <div><dt>개인 프로젝트</dt><dd><b>결제 AIOps 관제 플랫폼</b> (2026.09 – 진행 중, 실무와 별개)<br>Kafka · k3s · Terraform · Gemini로 직접 설계 · 구축</dd></div>
+    </dl></div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head">
+      <div class="eyebrow">강점</div>
+      <h2>넓게 익히고, 전체를 책임지고, 끝까지 파고듭니다</h2>
+    </div>
+    <div class="grid3">
+      <div class="block strength"><b>필요한 기술이라면 영역을 가리지 않고 익혀 실무에 씁니다</b><p>Python 소켓 서버부터 Java·Spring, NestJS, React, AWS·온프레미스 인프라, OpenCV·YOLO까지 맡은 일에 필요한 기술을 익혀 적용했습니다. 지금은 Kafka·Kubernetes를 개인 프로젝트로 직접 구축하고 있습니다.</p></div>
+      <div class="block strength"><b>시스템의 처음부터 운영까지, 전체 흐름을 이해하고 책임집니다</b><p>센서 수신, 저장, API, 관제 화면, 모니터링과 백업까지 데이터가 지나는 모든 구간을 구축했습니다. 그래서 새로 합류한 팀장·팀원에게 시스템의 연혁과 운영 방법을 전할 수 있었습니다.</p></div>
+      <div class="block strength"><b>문제의 진짜 원인을 찾을 때까지 파고들어 끝까지 해결합니다</b><p>수집 누락이 생겼을 때 DB 커넥션을 늘려도 해결되지 않자, TCP 연결 유지가 근본 원인임을 찾아 고치고 가상 센서 5만 대로 48시간 검증했습니다.</p></div>
+    </div>
+    <div class="sec-head"><h3>운영 원칙: 장애를 먼저 알고, 미리 검증하고, 빨리 복구합니다</h3></div>
+    <div class="principle">
+      <div><b>먼저 알아챕니다</b><span>Prometheus·Grafana·Zabbix로 상태를 보고, 이상은 Slack으로 바로 알림</span></div>
+      <div><b>미리 검증합니다</b><span>구조를 바꾸면 가상 센서 5만 대로 48시간 부하테스트 후 반영</span></div>
+      <div><b>장애가 나도 되살립니다</b><span>DB를 SFTP로 백업, 온프레미스 저장소는 RAID 1로 이중화</span></div>
+      <div><b>손을 덜 탑니다</b><span>인증서 갱신·백업·수집 서버 증설을 자동화</span></div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="sec-head">
+      <div class="eyebrow">기술 스택</div>
+      <h2>백엔드부터 프론트 · 인프라 · AI까지 직접 다룹니다</h2>
+      <p class="lead"><span class="kind work">실무</span>회사 프로젝트에서 사용 &nbsp; <span class="kind mine">개인</span>개인 프로젝트(결제 AIOps)에서만 사용</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>분야</th><th>기술</th><th>실무에서 사용한 곳</th></tr></thead>
+        <tbody>
+          <tr><td>Backend</td><td><span class="kind work">실무</span>Java · Spring Boot · Spring Batch · Python · NestJS · Node.js</td><td>맥케어 · 한화오션 · K-Cloud</td></tr>
+          <tr><td>Frontend</td><td><span class="kind work">실무</span>React · Next.js · Redux · TypeScript · Nexacro</td><td>맥케어 · 한화오션 · K-Cloud</td></tr>
+          <tr><td>Infra · Cloud</td><td><span class="kind work">실무</span>AWS · Docker · Nginx · Linux <span class="mine-tech"><span class="kind mine">개인</span>k3s · Terraform</span></td><td>맥케어</td></tr>
+          <tr><td>Data · Messaging</td><td><span class="kind work">실무</span>PostgreSQL · Oracle · MySQL <span class="mine-tech"><span class="kind mine">개인</span>Redis · Kafka</span></td><td>맥케어 · 한화오션 · 인턴</td></tr>
+          <tr><td>Monitoring</td><td><span class="kind work">실무</span>Prometheus · Grafana · Zabbix <span class="mine-tech"><span class="kind mine">개인</span>Tempo</span></td><td>맥케어</td></tr>
+          <tr><td>AI · Vision</td><td><span class="kind work">실무</span>YOLO · OpenCV · Kubeflow <span class="mine-tech"><span class="kind mine">개인</span>Gemini · MCP</span></td><td>한화오션 · K-Cloud</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="ai">
+    <div class="sec-head">
+      <div class="eyebrow">AI 활용</div>
+      <h2>AI를 서비스와 개발에 직접 씁니다</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>분야</th><th>한 일</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kind work">실무</span></td><td>모델 학습</td><td>공장 실데이터로 YOLO 기반 QR 영역 탐지 모델 학습 (한화오션 QR 인식)</td></tr>
+          <tr><td><span class="kind work">실무</span></td><td>AI 인프라</td><td>Kubeflow 기반 GPU 할당 Cloud IDE 구축 참여, 손글씨 모델 학습으로 검증 (K-Cloud)</td></tr>
+          <tr><td><span class="kind mine">개인</span></td><td>LLM 연동</td><td>Gemini 운영 리포트 + MCP 서버를 도구로 호출하는 에이전트 (결제 AIOps)</td></tr>
+          <tr><td><span class="kind mine">개인</span></td><td>개발 생산성</td><td>Claude로 설계 검토 · 코드 리뷰 · 문서화 (결제 AIOps · 포트폴리오)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="proj" id="mckare">
+    <div class="proj-head">
+      <div class="org">(주)제이씨에프테크놀러지 · 주임연구원</div>
+      <h2>맥케어 생체신호 모니터링 플랫폼</h2>
+      <div class="meta"><span class="tag">2022.01 – 2025.05</span><span class="tag">초기 구축 주도 · 인프라·백엔드·프론트</span><span class="tag">지자체 실서비스</span><span class="tag">해외 POC</span><span class="tag">현재 운영 중</span></div>
+    </div>
+      <div class="part"><h3>개요</h3><div>
+        <p>레이더 센서가 독거 어르신 등 취약계층의 심박·호흡·낙상·재실 여부를 비접촉으로 감지하는 서비스입니다. 입사 첫해 초기 시스템을 직접 구축했고, 2년 차부터 합류한 팀장·팀원과 함께 해외 POC로 확장했습니다. 실서비스라 가용성과 데이터 무결성을 가장 중요하게 다뤘습니다.</p>
+      </div></div>
+      <div class="part"><h3>운영 구조</h3><div>
+        <figure>
+      <div class="diagram">
+        <svg viewBox="0 0 920 400" role="img" aria-label="맥케어 운영 구조: 나라마다 AWS EC2 인스턴스에 Nginx와 API·수신·DB 컨테이너를 두고, 센서는 설치 시 자기 나라 서버 IP로 붙는다. 관제 웹은 사용자에 저장된 국가 코드와 API 도메인으로 해당 나라 API를 호출하고, 통계용 데이터는 온프레미스 대용량 DB에 모아 분석한다">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"/></marker>
+            <marker id="arrowAlert" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z"/></marker>
+          </defs>
+
+          <!-- 위: 통계 DB · 관제 웹 · 모니터링 -->
+          <rect class="box" x="20" y="16" width="250" height="62" rx="8"/>
+          <text class="t-strong" x="145" y="42" text-anchor="middle">온프레미스 통계 DB</text>
+          <text class="t-mono" x="145" y="62" text-anchor="middle">대용량 · 국가별 통계 분석</text>
+
+          <rect class="hot" x="320" y="16" width="280" height="62" rx="8"/>
+          <text class="t-strong" x="460" y="42" text-anchor="middle">관제 웹 (메인)</text>
+          <text class="t-mono" x="460" y="62" text-anchor="middle">사용자별 국가 코드·API 도메인으로 호출</text>
+
+          <rect class="box" x="650" y="16" width="250" height="62" rx="8"/>
+          <text class="t-strong" x="775" y="42" text-anchor="middle">모니터링 → Slack</text>
+          <text class="t-mono" x="775" y="62" text-anchor="middle">Prometheus·Grafana·Zabbix</text>
+
+          <!-- 나라별 인스턴스 -->
+          <g>
+            <rect class="box" x="20" y="150" width="270" height="150" rx="10"/>
+            <text class="t-strong" x="34" y="172">AWS EC2 · 영국</text>
+            <rect class="hot" x="34" y="182" width="242" height="26" rx="5"/><text x="155" y="200" text-anchor="middle">Nginx · 리버스 프록시</text>
+            <rect class="box" x="34" y="216" width="76" height="30" rx="5"/><text x="72" y="236" text-anchor="middle">API</text>
+            <rect class="box" x="117" y="216" width="76" height="30" rx="5"/><text x="155" y="236" text-anchor="middle">수신 ×N</text>
+            <rect class="box" x="200" y="216" width="76" height="30" rx="5" stroke-dasharray="4 3"/><text x="238" y="236" text-anchor="middle">웹(희망 시)</text>
+            <rect class="box" x="34" y="254" width="242" height="30" rx="5"/><text x="155" y="274" text-anchor="middle">DB · 국가별 보관 기간</text>
+          </g>
+          <g>
+            <rect class="box" x="325" y="150" width="270" height="150" rx="10"/>
+            <text class="t-strong" x="339" y="172">AWS EC2 · 한국</text>
+            <rect class="hot" x="339" y="182" width="242" height="26" rx="5"/><text x="460" y="200" text-anchor="middle">Nginx · 리버스 프록시</text>
+            <rect class="box" x="339" y="216" width="76" height="30" rx="5"/><text x="377" y="236" text-anchor="middle">API</text>
+            <rect class="box" x="422" y="216" width="76" height="30" rx="5"/><text x="460" y="236" text-anchor="middle">수신 ×N</text>
+            <rect class="box" x="505" y="216" width="76" height="30" rx="5" stroke-dasharray="4 3"/><text x="543" y="236" text-anchor="middle">웹(희망 시)</text>
+            <rect class="box" x="339" y="254" width="242" height="30" rx="5"/><text x="460" y="274" text-anchor="middle">DB · 국가별 보관 기간</text>
+          </g>
+          <g>
+            <rect class="box" x="630" y="150" width="270" height="150" rx="10"/>
+            <text class="t-strong" x="644" y="172">AWS EC2 · UAE·일본·독일 …</text>
+            <rect class="hot" x="644" y="182" width="242" height="26" rx="5"/><text x="765" y="200" text-anchor="middle">Nginx · 리버스 프록시</text>
+            <rect class="box" x="644" y="216" width="76" height="30" rx="5"/><text x="682" y="236" text-anchor="middle">API</text>
+            <rect class="box" x="727" y="216" width="76" height="30" rx="5"/><text x="765" y="236" text-anchor="middle">수신 ×N</text>
+            <rect class="box" x="810" y="216" width="76" height="30" rx="5" stroke-dasharray="4 3"/><text x="848" y="236" text-anchor="middle">웹(희망 시)</text>
+            <rect class="box" x="644" y="254" width="242" height="30" rx="5"/><text x="765" y="274" text-anchor="middle">DB · 국가별 보관 기간</text>
+          </g>
+
+          <!-- 관제 웹 → 나라별 API -->
+          <path class="wire" d="M420 78 C 420 120, 200 110, 200 150" marker-end="url(#arrow)"/>
+          <path class="wire" d="M460 78 V150" marker-end="url(#arrow)"/>
+          <path class="wire" d="M500 78 C 500 120, 720 110, 720 150" marker-end="url(#arrow)"/>
+          <text class="t-mono" x="470" y="122">국가별 API 호출</text>
+
+          <!-- 나라별 DB → 온프레미스 통계 DB -->
+          <path class="wire" d="M60 150 V78" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+          <path class="wire" d="M355 150 V132 H120 V78" stroke-dasharray="4 3"/>
+          <path class="wire" d="M660 150 V138 H130 V78" stroke-dasharray="4 3"/>
+          <text class="t-mono" x="140" y="104">통계용 데이터 적재</text>
+
+          <!-- 모니터링 -->
+          <path class="wire alert" d="M870 78 V150" marker-end="url(#arrowAlert)"/>
+
+          <!-- 센서 -->
+          <rect class="box" x="60" y="336" width="190" height="48" rx="8"/>
+          <text x="155" y="356" text-anchor="middle">영국 센서</text>
+          <text class="t-mono" x="155" y="374" text-anchor="middle">설치 시 영국 서버 IP 입력</text>
+          <rect class="box" x="365" y="336" width="190" height="48" rx="8"/>
+          <text x="460" y="356" text-anchor="middle">한국 센서 (지자체)</text>
+          <text class="t-mono" x="460" y="374" text-anchor="middle">설치 시 한국 서버 IP 입력</text>
+          <rect class="box" x="670" y="336" width="190" height="48" rx="8"/>
+          <text x="765" y="356" text-anchor="middle">각국 POC 센서</text>
+          <text class="t-mono" x="765" y="374" text-anchor="middle">설치 시 해당국 서버 IP 입력</text>
+          <path class="wire" d="M155 336 V300" marker-end="url(#arrow)"/>
+          <path class="wire" d="M460 336 V300" marker-end="url(#arrow)"/>
+          <path class="wire" d="M765 336 V300" marker-end="url(#arrow)"/>
+          <text class="t-mono" x="168" y="324">TCP 소켓</text>
+        </svg>
+      </div>
+      <figcaption>운영 구조. 나라마다 AWS EC2 인스턴스를 두고 Nginx 뒤에 API·수신 서버·DB를 컨테이너로 운영했습니다. 수신 서버는 수집량에 맞춰 컨테이너 수를 늘리고 Nginx 로드밸런서로 분산했습니다. 관제 웹은 한 대로 운영하고, 원하는 나라에는 전용 웹도 제공했습니다. 실제 주소와 서버 이름은 빼고 새로 그린 그림입니다.</figcaption>
+    </figure>
+        <div class="block">
+      <h3>나라별로 서버를 나눈 이유</h3>
+      <ul>
+        <li><b>보관 기간을 나라별로 관리</b>: POC 단계라 나라마다 데이터를 소규모로 쓰고, 보관 기간을 따로 조절해야 했습니다.</li>
+        <li><b>지연 최소화</b>: 센서와 같은 나라의 서버가 데이터를 받아, 실시간 감지에 필요한 응답 지연을 줄였습니다.</li>
+        <li><b>나라별 통계의 의미</b>: 데이터를 나라별로 나눠 두고, 통계가 필요한 데이터만 온프레미스 대용량 DB로 모아 국가별로 비교·분석했습니다.</li>
+      </ul>
+    </div>
+      </div></div>
+      <div class="part"><h3>담당 업무</h3><div>
+        <div class="grid2">
+      <div class="block">
+        <h3>다국가 센서 데이터 수집</h3>
+        <ul>
+          <li>나라별 AWS EC2 인스턴스에 Nginx 리버스 프록시와 API·수신 서버·DB 컨테이너 구성</li>
+          <li>Python 멀티스레드 소켓 서버로 여러 센서의 동시 연결과 데이터 수신 처리</li>
+          <li>수집량이 많을 때 DB 저장이 밀리는 문제를, 수집 컨테이너 수를 가변적으로 늘리고 Nginx 로드밸런서로 분산해 해결</li>
+          <li>사용자 정보에 국가 코드와 API 도메인을 함께 저장해, 관제 웹이 사용자별로 해당 나라 API를 호출</li>
+          <li>통계용 데이터는 온프레미스 대용량 DB로 모아 국가별로 분석</li>
+        </ul>
+      </div>
+      <div class="block">
+        <h3>백엔드</h3>
+        <ul>
+          <li>Spring Boot 백엔드 서버, Spring Batch로 API 호출과 데이터 백업</li>
+          <li>Java로 센서 데이터 수신과 FFT 알고리즘 구현</li>
+          <li>NestJS·PostgreSQL 관제 API, API 호출 로깅 공용 모듈</li>
+        </ul>
+      </div>
+      <div class="block">
+        <h3>인프라 · 비용</h3>
+        <ul>
+          <li>Saving Plan으로 연간 EC2 비용 약 30% 절감, 센서 5만 대 부하테스트는 Spot으로 돌려 비용 82% 절감</li>
+          <li>Docker Compose 국가별 일괄 배포, Shell Script로 백업·로그 수집 자동화</li>
+          <li>온프레미스 IP·Port 접근 제어, Outbound 제한, RAID 1(12TB 미러링)</li>
+        </ul>
+      </div>
+      <div class="block">
+        <h3>모니터링 · 장애 대응</h3>
+        <ul>
+          <li>Prometheus·Grafana·Zabbix로 서버 트래픽·가용량 대시보드 구축</li>
+          <li>이상 발생 시 Slack으로 즉시 알림</li>
+          <li>Certbot 인증서 자동 갱신, 주·월 단위 데이터 백업</li>
+        </ul>
+      </div>
+    </div>
+      </div></div>
+      <div class="part"><h3>관제 웹</h3><div>
+        <p>기관 담당자가 센서 상태와 이상 징후를 실시간으로 보고, 기간별 추세를 분석하고, 기관·위치별로 권한을 나눠 관리하는 화면을 직접 개발했습니다.</p>
+        <div class="table-wrap">
+      <table>
+        <thead><tr><th>영역</th><th>직접 개발한 기능</th></tr></thead>
+        <tbody>
+          <tr><td>실시간 관제</td><td>15초 주기 상태 갱신, 이상 발생 센서 상단 정렬, 당일 이상·낙상 건수와 전일 대비 증감, 이상자별 재실 타임라인과 엑셀 다운로드</td></tr>
+          <tr><td>데이터 분석</td><td>최근 1개월과 조회 기간을 비교해 재실 시간·이상 건수가 급증·급감한 센서 탐지, 취약시간(18–09시) 이상자 순위, 일·주·월 단위 한달통계</td></tr>
+          <tr><td>위험군 관리</td><td>사용자가 정하는 저·중·고위험 기준값, 기간별 위험군 목록, 재실 경고 9일 이력</td></tr>
+          <tr><td>권한 · 조직</td><td>고객키로 소속 기관을 연결하는 회원가입, 대·중·소분류·구역 4단계 위치 계층, 기관·위치 범위별 모니터링 권한과 일괄 변경</td></tr>
+          <tr><td>공통 UI</td><td>9개 언어 다국어, 라이트·다크 테마, 권한별 메뉴 바로가기, 오늘의 이상 감지 알림, 푸시·소리(벨·음성) 알림 설정</td></tr>
+        </tbody>
+      </table>
+    </div>
+        <figure class="shots" aria-label="직접 개발한 관제 웹 화면">
+          <figure><img src="img/mk-analysis.jpg" alt="통합분석 화면" loading="lazy"><figcaption><b>통합분석</b>급증·급감 센서 · 취약시간 순위</figcaption></figure>
+          <figure><img src="img/mk-monthly.jpg" alt="한달통계 화면" loading="lazy"><figcaption><b>한달통계</b>최근 한달 총계 · 상위 TOP 3</figcaption></figure>
+          <figure><img src="img/mk-list.jpg" alt="목록분석 화면" loading="lazy"><figcaption><b>목록분석</b>15초 갱신 · 센서별 상태</figcaption></figure>
+          <figure><img src="img/mk-detail.jpg" alt="센서 상세 팝업" loading="lazy"><figcaption><b>센서 상세</b>재실 타임라인 · 기준값 설정</figcaption></figure>
+          <figure><img src="img/mk-location.jpg" alt="위치 등록 화면" loading="lazy"><figcaption><b>위치 등록</b>4단계 위치 계층</figcaption></figure>
+        </figure>
+        <p class="stack">매뉴얼의 데모 데이터 화면입니다. 고객사 이름이 보이는 화면은 넣지 않았습니다.</p>
+        <p class="stack">React · Next.js · Redux · NestJS · PostgreSQL</p>
+      </div></div>
+      <div class="part"><h3>개발 환경</h3><div>
+        <p>공인 IP 하나에 80·443 포트만 열고, 리버스 프록시가 서브도메인별로 개발 서버 3개를 나눕니다. 서버마다 Web·API·DB·배치·수신 서버를 컨테이너로 띄워 서로 영향 없이 개발하고 시연할 수 있게 했습니다.</p>
+        <figure>
+      <div class="diagram">
+        <svg viewBox="0 0 920 270" role="img" aria-label="개발 서버 구조: 클라이언트 요청이 라우터의 80·443 포트포워딩을 지나 Nginx 리버스 프록시에서 dev01·dev02·dev03으로 나뉘고, 각 서버는 Web·API·DB·배치·수신 컨테이너를 운영한다">
+          <defs>
+            <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"/></marker>
+          </defs>
+          <rect class="box" x="20" y="108" width="120" height="54" rx="8"/>
+          <text class="t-strong" x="80" y="132" text-anchor="middle">클라이언트</text>
+          <text class="t-mono" x="80" y="150" text-anchor="middle">dev01 · 02 · 03</text>
+
+          <rect class="box" x="190" y="108" width="130" height="54" rx="8"/>
+          <text class="t-strong" x="255" y="132" text-anchor="middle">라우터</text>
+          <text class="t-mono" x="255" y="150" text-anchor="middle">80·443 포워딩</text>
+
+          <rect class="hot" x="370" y="96" width="150" height="78" rx="8"/>
+          <text class="t-strong" x="445" y="128" text-anchor="middle">Nginx</text>
+          <text class="t-strong" x="445" y="146" text-anchor="middle">리버스 프록시</text>
+          <text class="t-mono" x="445" y="164" text-anchor="middle">서브도메인 분기</text>
+
+          <path class="wire" d="M140 135 H190" marker-start="url(#arrow2)" marker-end="url(#arrow2)"/>
+          <path class="wire" d="M320 135 H370" marker-start="url(#arrow2)" marker-end="url(#arrow2)"/>
+
+          <g>
+            <rect class="box" x="600" y="12" width="300" height="74" rx="8"/>
+            <text class="t-strong" x="616" y="36">dev01</text>
+            <text class="t-mono" x="616" y="56">Nginx · Web · API</text>
+            <text class="t-mono" x="616" y="72">DB · Batch · RCV(수신)</text>
+            <rect class="box" x="600" y="98" width="300" height="74" rx="8"/>
+            <text class="t-strong" x="616" y="122">dev02</text>
+            <text class="t-mono" x="616" y="142">Nginx · Web · API</text>
+            <text class="t-mono" x="616" y="158">DB · Batch · RCV(수신)</text>
+            <rect class="box" x="600" y="184" width="300" height="74" rx="8"/>
+            <text class="t-strong" x="616" y="208">dev03</text>
+            <text class="t-mono" x="616" y="228">Nginx · Web · API</text>
+            <text class="t-mono" x="616" y="244">DB · Batch · RCV(수신)</text>
+          </g>
+          <path class="wire" d="M520 135 C 560 135, 560 49, 600 49" marker-start="url(#arrow2)" marker-end="url(#arrow2)"/>
+          <path class="wire" d="M520 135 H600" marker-start="url(#arrow2)" marker-end="url(#arrow2)"/>
+          <path class="wire" d="M520 135 C 560 135, 560 221, 600 221" marker-start="url(#arrow2)" marker-end="url(#arrow2)"/>
+        </svg>
+      </div>
+      <figcaption>개발 서버 구조. 요청과 응답은 같은 경로를 오갑니다. 실제 도메인과 IP는 빼고 새로 그린 그림입니다.</figcaption>
+    </figure>
+      </div></div>
+      <div class="part"><h3>트러블슈팅</h3><div>
+        <article class="case">
+      <div class="case-head">
+        <span class="tag">사례 1</span>
+        <h3>센서 2,000대 이상에서 터진 수집 병목을 TCP 단기 연결과 수집 서버 자동 증설로 해결</h3>
+      </div>
+      <dl class="case-body">
+        <div><dt>상황</dt><dd>국내 POC를 포함해 센서 2,000대 이상이 5초마다 데이터를 보내자 수집 서버 한 대가 모든 데이터를 받아야 했습니다.</dd></div>
+        <div><dt>증상</dt><dd>데이터 누락률 증가, DB 저장 지연, 수집 서버 응답 저하, 로그 누락, 센서 접속 시 연결이 오래 걸림</dd></div>
+        <div><dt>원인</dt><dd>DB 커넥션을 늘려도 해결되지 않았습니다. 수집 서버 하나가 센서 2,000대 이상의 TCP 연결을 계속 유지하고 센서마다 응답까지 보내느라, 데이터를 제때 받지 못하는 것이 근본 원인이었습니다.</dd></div>
+        <div><dt>해결</dt><dd>
+          <ul>
+            <li>센서 로직이 연결을 스스로 끊지 않아, 서버가 데이터를 받으면 바로 연결을 끊도록 예외 처리를 추가해 TCP 단기 연결로 전환</li>
+            <li>센서에 보내던 응답 메시지를 없애 연결마다 드는 처리 부담을 줄임</li>
+            <li>데이터 없이 연결만 붙잡는 센서는 10초 타임아웃으로 정리</li>
+            <li>묶어서 저장하는 bulk_insert도 구현해 비교했지만, 이상 감지가 늦어지지 않고 장애 시 모아둔 데이터를 잃지 않도록 건당 저장을 유지하고 처리량은 컨테이너 증설로 확보</li>
+            <li>5초마다 새로 연결하므로 Nginx 로드밸런서가 요청마다 다른 수집 컨테이너로 고르게 분산할 수 있게 됨</li>
+                        <li>부하를 보고 내부 IP·포트를 하나씩 늘려 수집 컨테이너를 자동으로 추가, DB 커넥션도 함께 조정</li>
+          </ul>
+        </dd></div>
+        <div><dt>결과</dt><dd>수신이 빨라지고 누락률이 줄었으며, 수집 서버 부하가 분산돼 안정적으로 운영됐습니다. 같은 구조를 가상 센서 5만 대(5초 주기, 초당 약 1만 건)로 검증했습니다. 송신기 한 대로는 초당 1만 건을 보낼 수 없어 송신 컨테이너를 여러 개 띄웠고, 8 vCPU·32GB EC2를 Spot으로 띄워 24시간·48시간 동안 실행했고, Spot 덕분에 테스트 비용을 82% 줄였습니다. DB에 저장된 결과를 5초 주기 기준으로 집계한 누락률은 1% 미만이었습니다.</dd></div>
+        <div><dt>지금이라면</dt><dd>자동 증설을 직접 만든 스크립트 대신 Kubernetes 자동 확장으로 옮기고, 수집과 DB 저장 사이에 메시지 큐를 두어 저장이 밀려도 수신이 막히지 않게 하겠습니다.</dd></div>
+      </dl>
+    </article>
+        <article class="case">
+      <div class="case-head">
+        <span class="tag">사례 2</span>
+        <h3>인프라 구성과 약정 방식을 비교해 EC2 비용 30% 절감을 제안·도입</h3>
+      </div>
+      <dl class="case-body">
+        <div><dt>상황</dt><dd>해외 POC가 늘면서 나라마다 서버가 필요해졌고, 어디에 어떤 방식으로 운영할지 정해야 했습니다.</dd></div>
+        <div><dt>비교</dt><dd>
+          <ul>
+            <li>온프레미스 vs AWS EC2: 나라마다 서버를 직접 둘 수 없어 EC2로 결정</li>
+            <li>RDS vs EC2 안의 DB 컨테이너: 인스턴스 하나에 API·수신 서버·DB를 묶으면 비용이 낮고 나라별로 한 번에 배포·관리할 수 있어 DB 컨테이너로 결정</li>
+            <li>온디맨드 vs 1년 약정(Saving Plan): 장기 운영을 전제로 약정이 더 저렴</li>
+            <li>RDS 자동 백업 대신 Shell Script로 DB를 tar로 묶어 SFTP(암호화 전송)로 온프레미스 저장소에 백업</li>
+          </ul>
+        </dd></div>
+        <div><dt>설득</dt><dd>구성도와 방식별 비용 비교 자료를 직접 만들어, 영업·대표·팀장이 모인 회의에서 1년 약정이 더 저렴하다는 근거를 제시했습니다.</dd></div>
+        <div><dt>결과</dt><dd>Saving Plan을 도입해 연간 EC2 비용을 약 30% 줄였습니다.</dd></div>
+        <div><dt>지금이라면</dt><dd>DB를 컨테이너로 운영하며 포기한 자동 백업·장애 전환을 비용과 함께 표로 비교해, 서비스가 커지는 시점에 RDS로 옮길 기준을 미리 정해 두겠습니다.</dd></div>
+      </dl>
+    </article>
+      </div></div>
+      <div class="part"><h3>기술</h3><div>
+        <p class="stack">Python · Java · Spring Boot · Spring Batch · NestJS · PostgreSQL · Nginx · Docker · Docker Compose · AWS(EC2·Route53·IAM) · Prometheus · Grafana · Zabbix · React · Next.js · Shell Script</p>
+      </div></div>
+      <div class="part"><h3>배운 점</h3><div>
+        <div class="lesson"><dl>
+          <div><dt>부족했던 점</dt><dd>관리자 화면을 "정해진 흐름대로만 쓸 것"이라 보고 가볍게 만들었습니다. 데이터 수정·삭제 요청이 올 때마다 DB에 직접 접속하거나 시스템을 잠시 멈춰야 했고, 전시회 현장에서는 노트북으로 AWS에 들어가 작업하느라 시연 시간을 써야 했습니다.</dd></div>
+          <div><dt>바꾼 것</dt><dd>운영 중에 생길 수정·삭제 요청을 미리 예상해 관리자 화면에서 처리하게 만들고, 변경 내용은 모두 로그로 남기며, 중요한 데이터는 화면에서 막거나 특정 권한 계정만 처리하도록 나눴습니다. 운영 안정성은 서버뿐 아니라 관리 화면과 운영 방식까지 포함한다는 걸 배웠습니다.</dd></div>
+        </dl></div>
+      </div></div>
+  </section>
+
+  <section class="proj" id="yard">
+    <div class="proj-head">
+      <div class="org">그랜드파워솔루션 · 주임연구원</div>
+      <h2>한화오션 절단공장 야드 관제 시스템</h2>
+      <div class="meta"><span class="tag">2025.06 – 2026.08</span><span class="tag">개발 담당</span><span class="tag">제조 현장</span></div>
+    </div>
+      <div class="part"><h3>개요</h3><div>
+        <p>한화오션 조선소 절단공장 야드에서 크레인 작업과 자재 재고를 관제하는 시스템입니다. 대형 제조 현장의 실제 설비를 제어하는 만큼 작업 순서와 안전 요구사항을 정확히 반영해야 했습니다.</p>
+      </div></div>
+      <div class="part"><h3>처리 흐름</h3><div>
+        <div class="flow"><span>관제 웹 · 모바일 (Nexacro · Morpheus)</span><i>→</i><span>API 서버 (Java · Spring)</span><i>→</i><span class="hot">Oracle 프로시저 (작업지시 · 취소 · 재고)</span><i>→</i><span>크레인 작업</span></div>
+        <p class="stack">사내 시스템이라 화면 대신 처리 흐름으로 정리했습니다. 색이 다른 칸이 직접 핵심을 구현한 단계입니다.</p>
+      </div></div>
+      <div class="part"><h3>담당 업무</h3><div>
+        <ul class="plain">
+          <li>Oracle SQL 프로시저로 크레인 작업지시·작업취소·재고설정 제어 로직 개발</li>
+          <li>Nexacro 기반 야드 관제 웹: 공장 전체 통계와 대시보드, 크레인 작업 현황·재고 화면</li>
+          <li>Morpheus 기반 모바일: 크레인 차량 작업지시·취소·수정, 사용자 데이터 수정</li>
+        </ul>
+      </div></div>
+      <div class="part"><h3>기술</h3><div>
+        <p class="stack">Java · Spring · Oracle(SQL Procedure) · Nexacro · Morpheus · JavaScript · GitLab</p>
+      </div></div>
+  </section>
+
+  <section class="proj" id="qr">
+    <div class="proj-head">
+      <div class="org">그랜드파워솔루션 · 주임연구원</div>
+      <h2>한화오션 전처리공장 QR 인식 시스템</h2>
+      <div class="meta"><span class="tag">2025.06 – 2026.08</span><span class="tag">개발 담당</span><span class="tag">비전 · ERP 연동</span></div>
+    </div>
+      <div class="part"><h3>개요</h3><div>
+        <p>전처리공장에서 이송되는 강판의 QR 코드를 카메라로 읽어, ERP(SAP)에 등록된 자재 정보와 일치하는지 검증하는 시스템입니다.</p>
+      </div></div>
+      <div class="part"><h3>처리 흐름</h3><div>
+        <div class="flow"><span>IP 카메라 (RTSP)</span><i>→</i><span class="hot">YOLO 탐지 (실데이터 학습)</span><i>→</i><span class="hot">이중 디코딩 · 감마 보정</span><i>→</i><span>SAP 자재 검증</span></div>
+        <p class="stack">사내 시스템이라 화면 대신 처리 흐름으로 정리했습니다. 색이 다른 칸이 직접 핵심을 구현한 단계입니다.</p>
+      </div></div>
+      <div class="part"><h3>담당 업무</h3><div>
+        <ul class="plain">
+          <li>OpenCV로 IP 카메라(RTSP) 실시간 프레임 캡처</li>
+          <li>공장 실데이터로 YOLO 기반 QR 영역 탐지 모델 학습</li>
+          <li>SAP 인터페이스로 받은 자재 정보와 QR 데이터의 일치 여부를 검증하는 처리 로직</li>
+        </ul>
+      </div></div>
+      <div class="part"><h3>인식률 개선</h3><div>
+        <ul class="plain">
+          <li>pyzbar·OpenCV 이중 디코딩으로 한쪽이 실패해도 다른 쪽으로 읽음</li>
+          <li>탐지 영역에 여백을 더해 QR 인식에 필요한 Quiet Zone 확보</li>
+          <li>감마 보정으로 명암 대비를 높이고, Confidence 기준으로 오탐지 영역 제거</li>
+        </ul>
+      </div></div>
+      <div class="part"><h3>기술</h3><div>
+        <p class="stack">Python · OpenCV · YOLO · pyzbar · SAP Interface</p>
+      </div></div>
+  </section>
+
+  <section class="proj" id="kcloud">
+    <div class="proj-head">
+      <div class="org">그랜드파워솔루션 · 참여</div>
+      <h2>K-Cloud 국가사업 GPU 할당 Cloud IDE</h2>
+      <div class="meta"><span class="tag">2026.07 – 2026.08</span><span class="tag">참여</span></div>
+    </div>
+      <div class="part"><h3>개요</h3><div>
+        <p>Kubeflow로 GPU 자원을 할당받아 쓰는 웹 IDE를 구축하는 국가사업에 참여했습니다.</p>
+      </div></div>
+      <div class="part"><h3>처리 흐름</h3><div>
+        <div class="flow"><span>웹 IDE (React · TypeScript)</span><i>→</i><span class="hot">Kubeflow</span><i>→</i><span class="hot">GPU 할당</span><i>→</i><span>모델 학습 검증</span></div>
+        <p class="stack">보안상 화면 대신 처리 흐름으로 정리했습니다.</p>
+      </div></div>
+      <div class="part"><h3>담당 업무</h3><div>
+        <ul class="plain">
+          <li>Kubeflow 기반 GPU 자원 할당 웹 IDE 구현 참여</li>
+          <li>할당된 환경에서 손글씨 인식 모델을 학습시켜 GPU 할당 동작 검증</li>
+        </ul>
+      </div></div>
+      <div class="part"><h3>기술</h3><div>
+        <p class="stack">Kubeflow · React · TypeScript · Node.js</p>
+      </div></div>
+  </section>
+
+  <section class="proj" id="vision">
+    <div class="proj-head">
+      <div class="org">한국지능기계 · 학생 체험형 인턴</div>
+      <h2>차량부품 비전 불량 검사</h2>
+      <div class="meta"><span class="tag">2020.11 – 2021.02</span><span class="tag">학생 체험형 인턴</span></div>
+    </div>
+      <div class="part"><h3>개요</h3><div>
+        <p>자동차 부품 공장에 납품하는 비전머신으로 부품의 불량 여부를 검사하는 프로그램입니다.</p>
+      </div></div>
+      <div class="part"><h3>처리 흐름</h3><div>
+        <div class="flow"><span>카메라 촬영</span><i>→</i><span class="hot">ROI · 감마 보정</span><i>→</i><span>불량 판정 (C# · WinForms)</span><i>→</i><span>PLC 장비 제어</span></div>
+        <p class="stack">이때의 ROI · 감마 보정 경험이 이후 QR 인식률 개선으로 이어졌습니다.</p>
+      </div></div>
+      <div class="part"><h3>담당 업무</h3><div>
+        <ul class="plain">
+          <li>카메라 기반 차량 부품 불량 판정 프로그램 개발</li>
+          <li>PLC 통신으로 검사 장비의 암전 상태 동작 제어</li>
+          <li>영역이 인식되지 않는 문제를 ROI·감마 보정 알고리즘으로 해결 (이후 QR 인식 개선으로 이어진 경험)</li>
+        </ul>
+      </div></div>
+      <div class="part"><h3>기술</h3><div>
+        <p class="stack">C# · WinForms · MySQL · PLC 통신</p>
+      </div></div>
+  </section>
+
+  <section class="proj" id="aiops">
+    <div class="proj-head">
+      <div class="org">개인 프로젝트 · 실무와 별개</div>
+      <h2>결제 AIOps 관제 플랫폼</h2>
+      <div class="meta"><span class="tag self">개인 프로젝트</span><span class="tag">2026.09 – 진행 중</span><span class="tag">라이브 데모 운영</span></div>
+    </div>
+      <div class="part"><h3>개요</h3><div>
+        <p>실무에서 깊게 다루지 못한 이벤트 기반 아키텍처를 직접 설계하려고 만든 프로젝트입니다. 가상 결제 트래픽을 흘려 이상 징후를 자동으로 탐지하고, AI가 운영 리포트를 작성하며, 이 흐름을 실시간 대시보드로 보여줍니다.</p>
+      </div></div>
+      <div class="part"><h3>화면</h3><div>
+        <figure><img class="wide-shot" src="img/aiops-monitoring.jpg" alt="결제 AIOps 실시간 모니터링 화면" loading="lazy"><figcaption>라이브 데모의 실시간 모니터링 화면 (aiops.ygrhash.dev)</figcaption></figure>
+      </div></div>
+      <div class="part"><h3>설계와 운영</h3><div>
+        <div class="grid2">
+      <div class="block">
+        <h3>설계</h3>
+        <ul>
+          <li>Java·Spring Boot 결제 API가 Kafka로 이벤트 발행, 컨슈머가 PostgreSQL(영속 기록)과 Redis(실시간 TPS·에러율)에 역할을 나눠 저장</li>
+          <li>Python으로 트래픽 생성·이상 탐지·Gemini 기반 AI 리포트, TypeScript로 게이트웨이·WebSocket 서버·React 대시보드</li>
+          <li>AI 리포트 에이전트가 MCP 서버를 도구로 호출해 Kafka Lag·지표·DB 데이터 조회</li>
+        </ul>
+      </div>
+      <div class="block">
+        <h3>운영</h3>
+        <ul>
+          <li>k3s와 Terraform으로 AWS(Spot)·Oracle Cloud에 배포</li>
+          <li>Prometheus·Grafana·Tempo로 지표와 분산 트레이싱, 이상 알림은 n8n을 거쳐 Slack</li>
+          <li>k6로 단일 노드(t3.large) 안정 한계 약 65~70 TPS 측정(p95 500ms 기준), GitHub Actions CI</li>
+        </ul>
+      </div>
+    </div>
+      </div></div>
+      <div class="part"><h3>링크</h3><div>
+        <div class="links"><a href="https://aiops.ygrhash.dev/dashboard/">라이브 데모 → aiops.ygrhash.dev</a><a href="https://github.com/ygrhash/Portfolio">코드 → github.com/ygrhash/Portfolio</a></div>
+      </div></div>
+  </section>
+
+  <section id="motivation">
+    <div class="sec-head">
+      <div class="eyebrow">일하는 이유</div>
+      <h2>제가 이 일을 하는 이유</h2>
+    </div>
+    <div class="lesson"><dl>
+      <div><dt>쓰이는 결과</dt><dd>제가 만든 시스템이 현장에서 실제로 쓰이고, 사용자의 문제를 해결할 때 가장 큰 보람을 느낍니다.</dd></div>
+      <div><dt>필요한 기술은 직접</dt><dd>그래서 백엔드 · 화면 · 인프라 · AI까지 영역을 가리지 않고 필요한 기술을 직접 익혀 문제를 풉니다.</dd></div>
+      <div><dt>이어받는 개발</dt><dd>누구나 금방 이어받을 수 있게 기록하고 자동화합니다.</dd></div>
+    </dl></div>
+  </section>
+
+  <footer>
+    <div class="story" style="border-left-color: var(--line)">
+      <div class="eyebrow">앞으로 하고 싶은 일</div>
+      <p>제가 만든 시스템을 사용자가 불편 없이 쓰고, 안정적으로 계속 운영되는 것이 가장 큰 목표입니다. 한 번 만들고 끝내지 않고 계속 고도화하고, 문서화와 자동화로 새로 합류한 사람도 금방 적응하고 운영하는 사람도 편하게 다룰 수 있는 시스템을 만들고 싶습니다.</p>
+    </div>
+    <div>윤경록 · 010-2967-2625 · tjsal89000@naver.com · github.com/ygrhash</div>
+    <div>구성도는 실제 주소·서버 이름·고객사 정보를 빼고 새로 그렸습니다. 회사 문서 원본은 포함하지 않습니다.</div>
+  </footer>
+</div>
+
+</body>
+</html>
