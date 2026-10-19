@@ -267,6 +267,8 @@ footer { border-top: 1px solid var(--ink); }
   .hero { border-bottom: 3px double #000; }
 }
 
+/* 한국어 단어 중간에서 줄바꿈되지 않게 */
+body { word-break: keep-all; overflow-wrap: break-word; }
 /* ---- 사진 · 스크린샷 · 처리 흐름 · 실무/개인 구분 ---- */
 .hero-top { display: flex; gap: 24px; align-items: flex-start; justify-content: space-between; }
 .hero-top h1 { flex: 1; min-width: 0; }
