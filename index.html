@@ -257,6 +257,7 @@ h3 { color: var(--head); }
 th { font-family: var(--font-body); letter-spacing: 0; color: var(--ink); background: var(--node); }
 th, td { border: 1px solid var(--line); }
 .table-wrap { border: 0; }
+tr:last-child td { border-bottom: 1px solid var(--line); }
 .tl::before { border-radius: 0; width: 8px; height: 8px; left: -5px; top: 10px; background: var(--muted); border: 0; }
 footer { border-top: 1px solid var(--ink); }
 .dl-btn { border-radius: 0; background: none; color: var(--head); border: 1px solid var(--head); }
@@ -286,7 +287,7 @@ body { word-break: keep-all; overflow-wrap: break-word; }
 .kind { display: inline-block; font-size: 0.75rem; padding: 1px 6px; border: 1px solid var(--line); color: var(--muted); margin-right: 6px; white-space: nowrap; }
 .kind.work { background: var(--node); color: var(--ink); }
 .kind.mine { border-color: var(--head); color: var(--head); }
-td .mine-tech { color: var(--muted); }
+td .mine-tech { display: block; margin-top: 6px; color: var(--muted); }
 @media print { .shots figure, .flow { break-inside: avoid; } }
 </style>
 </head>
