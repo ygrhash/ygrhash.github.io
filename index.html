@@ -340,13 +340,13 @@ td .mine-tech { color: var(--muted); }
     <div class="grid3">
       <div class="block strength"><b>필요한 기술이라면 영역을 가리지 않고 익혀 실무에 씁니다</b><p>Python 소켓 서버부터 Java·Spring, NestJS, React, AWS·온프레미스 인프라, OpenCV·YOLO까지 맡은 일에 필요한 기술을 익혀 적용했습니다. 지금은 Kafka·Kubernetes를 개인 프로젝트로 직접 구축하고 있습니다.</p></div>
       <div class="block strength"><b>시스템의 처음부터 운영까지, 전체 흐름을 이해하고 책임집니다</b><p>센서 수신, 저장, API, 관제 화면, 모니터링과 백업까지 데이터가 지나는 모든 구간을 구축했습니다. 그래서 새로 합류한 팀장·팀원에게 시스템의 연혁과 운영 방법을 전할 수 있었습니다.</p></div>
-      <div class="block strength"><b>문제의 진짜 원인을 찾을 때까지 파고들어 끝까지 해결합니다</b><p>수집 누락이 생겼을 때 DB 커넥션을 늘려도 해결되지 않자, TCP 연결 유지가 근본 원인임을 찾아 고치고 가상 센서 5만 대로 48시간 검증했습니다.</p></div>
+      <div class="block strength"><b>문제의 진짜 원인을 찾을 때까지 파고들어 끝까지 해결합니다</b><p>수집 누락은 DB 커넥션이 아니라 TCP 연결 유지와 포트 고갈이 원인임을 찾아 고치고 가상 센서 5만 대로 48시간 검증했습니다. 한 나라에서만 DB가 뜨지 않던 장애는 리전별 버전 차이에서 원인을 찾아 이미지 버전을 고정했습니다.</p></div>
     </div>
     <div class="sec-head"><h3>운영 원칙: 장애를 먼저 알고, 미리 검증하고, 빨리 복구합니다</h3></div>
     <div class="principle">
       <div><b>먼저 알아챕니다</b><span>Prometheus·Grafana·Zabbix로 상태를 보고, 이상은 Slack으로 바로 알림</span></div>
       <div><b>미리 검증합니다</b><span>구조를 바꾸면 가상 센서 5만 대로 48시간 부하테스트 후 반영</span></div>
-      <div><b>장애가 나도 되살립니다</b><span>DB를 SFTP로 백업, 온프레미스 저장소는 RAID 1로 이중화</span></div>
+      <div><b>장애가 나도 되살립니다</b><span>매일 DB dump, 보관 기간별 이동·삭제, dump로 테스트 서버를 복원해 백업 검증, RAID 1 이중화</span></div>
       <div><b>손을 덜 탑니다</b><span>인증서 갱신·백업·수집 서버 증설을 자동화</span></div>
     </div>
   </section>
@@ -361,7 +361,7 @@ td .mine-tech { color: var(--muted); }
       <table>
         <thead><tr><th>분야</th><th>기술</th><th>실무에서 사용한 곳</th></tr></thead>
         <tbody>
-          <tr><td>Backend</td><td><span class="kind work">실무</span>Java · Spring Boot · Spring Batch · Python · NestJS · Node.js</td><td>맥케어 · 한화오션 · K-Cloud</td></tr>
+          <tr><td>Backend</td><td><span class="kind work">실무</span>Java · Spring Boot · Spring Batch · Python · NestJS · TypeORM · class-validator · Node.js</td><td>맥케어 · 한화오션 · K-Cloud</td></tr>
           <tr><td>Frontend</td><td><span class="kind work">실무</span>React · Next.js · Redux · TypeScript · Nexacro</td><td>맥케어 · 한화오션 · K-Cloud</td></tr>
           <tr><td>Infra · Cloud</td><td><span class="kind work">실무</span>AWS · Docker · Nginx · Linux <span class="mine-tech"><span class="kind mine">개인</span>k3s · Terraform</span></td><td>맥케어</td></tr>
           <tr><td>Data · Messaging</td><td><span class="kind work">실무</span>PostgreSQL · Oracle · MySQL <span class="mine-tech"><span class="kind mine">개인</span>Redis · Kafka</span></td><td>맥케어 · 한화오션 · 인턴</td></tr>
@@ -509,7 +509,7 @@ td .mine-tech { color: var(--muted); }
         <ul>
           <li>Spring Boot 백엔드 서버, Spring Batch로 API 호출과 데이터 백업</li>
           <li>Java로 센서 데이터 수신과 FFT 알고리즘 구현</li>
-          <li>NestJS·PostgreSQL 관제 API, API 호출 로깅 공용 모듈</li>
+          <li>NestJS·TypeORM·PostgreSQL 관제 API, API 호출 로깅 공용 모듈</li>
         </ul>
       </div>
       <div class="block">
@@ -552,7 +552,7 @@ td .mine-tech { color: var(--muted); }
           <figure><img src="img/mk-location.jpg" alt="위치 등록 화면" loading="lazy"><figcaption><b>위치 등록</b>4단계 위치 계층</figcaption></figure>
         </figure>
         <p class="stack">매뉴얼의 데모 데이터 화면입니다. 고객사 이름이 보이는 화면은 넣지 않았습니다.</p>
-        <p class="stack">React · Next.js · Redux · NestJS · PostgreSQL</p>
+        <p class="stack">React · Next.js · Redux · NestJS · TypeORM · PostgreSQL</p>
       </div></div>
       <div class="part"><h3>개발 환경</h3><div>
         <p>공인 IP 하나에 80·443 포트만 열고, 리버스 프록시가 서브도메인별로 개발 서버 3개를 나눕니다. 서버마다 Web·API·DB·배치·수신 서버를 컨테이너로 띄워 서로 영향 없이 개발하고 시연할 수 있게 했습니다.</p>
@@ -600,6 +600,29 @@ td .mine-tech { color: var(--muted); }
       <figcaption>개발 서버 구조. 요청과 응답은 같은 경로를 오갑니다. 실제 도메인과 IP는 빼고 새로 그린 그림입니다.</figcaption>
     </figure>
       </div></div>
+      <div class="part"><h3>백엔드 설계 결정</h3><div>
+        <p>관제 API(NestJS · TypeORM · PostgreSQL)와 수신 서버를 만들며 내린 결정과 이유입니다.</p>
+        <div class="table-wrap">
+      <table>
+        <thead><tr><th>주제</th><th>결정</th><th>이유 · 효과</th></tr></thead>
+        <tbody>
+          <tr><td>쿼리 작성 방식</td><td>단순 CRUD와 조건이 여러 개 붙는 동적 필터는 TypeORM QueryBuilder, join·서브쿼리가 들어가는 복잡한 조회는 raw query. raw query도 값은 문자열로 잇지 않고 파라미터로 바인딩</td><td>복잡한 쿼리는 TypeORM으로 표현하기 어렵고, TypeORM에 익숙하지 않은 사람도 SQL만 보고 유지보수할 수 있게 함. 바인딩으로 SQL 인젝션 차단</td></tr>
+          <tr><td>트랜잭션 · 연관 삭제</td><td>마스터 권한의 수정·삭제는 한 트랜잭션으로 묶고, 연관 데이터는 DB CASCADE 대신 코드에서 테이블 순서대로 삭제</td><td>운영 중인 테이블 정의를 바꾸는 위험을 피하고, 어떤 테이블의 데이터가 지워지는지 코드에 드러나 후임자도 파악하기 쉬움. 중간에 실패하면 전체 롤백하고 실패한 단계를 로그로 남겨 원인을 바로 추적</td></tr>
+          <tr><td>계층 조회</td><td>기관·위치 4단계 계층을 부모 코드 기준으로 설계</td><td>하위 데이터를 부모 코드 하나로 한 번에 조회해, 항목마다 쿼리가 반복되는 N+1을 구조적으로 방지</td></tr>
+          <tr><td>입력 검증</td><td>class-validator 기반 DTO로 타입과 허용 값만 받음</td><td>잘못된 값과 쿼리 인젝션 시도를 API 입구에서 차단</td></tr>
+          <tr><td>시간 저장</td><td>DB에는 UTC로 저장하고, 화면에서 사용자 국가의 시간대(한국은 UTC+9)로 변환</td><td>나라마다 시간대가 달라도 저장값이 하나의 기준이라 국가 간 비교·통계가 어긋나지 않음</td></tr>
+          <tr><td>인증</td><td>비밀번호는 bcrypt(salt 포함)로 해시 저장. 로그인 만료는 고객 요청으로 두지 않음</td><td>보호 대상자를 계속 지켜봐야 하는 관제 화면이라 자동 로그아웃으로 알림을 놓치면 안 됨. 대신 로그인 시도·IP를 기록해 이상 접속을 확인</td></tr>
+          <tr><td>중복 수신</td><td>센서코드와 수신 시각이 5초 이내로 겹치면 저장하지 않도록 INSERT 쿼리에 조건 추가</td><td>센서 버그로 같은 데이터가 반복 송신돼도 한 번만 저장. 메모리가 아닌 DB 기준이라 수집 컨테이너가 여러 개여도 동작</td></tr>
+          <tr><td>통계 조회</td><td>조직별 통계를 테이블에 저장해 두고, 없으면 집계 후 저장 · 있으면 바로 조회. 하루 한 번 첫 조회가 갱신</td><td>조회마다 집계하던 통계 화면 렌더링이 2~3초에서 즉시로 단축. 최초 저장 시각을 비교해 중복 저장 방지</td></tr>
+          <tr><td>날짜 형식</td><td>나라마다 다른 날짜 표기와 Unix time을 하나의 형식으로 바꾸는 공용 함수를 만든 뒤 API 형식을 통일</td><td>국가별 화면·통계에서 날짜가 어긋나는 문제를 한 곳에서 처리, 국가별로 꼭 필요한 예외만 유지</td></tr>
+          <tr><td>다국가 라우팅</td><td>첫 접속은 브라우저 언어·지역 코드로 언어팩 적용 → 로그인 시 미들웨어 API로 대상 국가 API 결정 → 이후 사용자 국가 코드를 쿠키에 저장</td><td>사용자마다 해당 나라 서버로 요청을 보내고 국가별 시간대를 적용</td></tr>
+          <tr><td>보안 로깅</td><td>로그인 시도 계정의 기관·국가 코드, 시도 횟수, 접근 페이지, 상태 코드와 실패 사유, 마지막 로그인 날짜·IP를 DB에 기록하는 공용 모듈</td><td>계정 잠김·다른 곳 로그인 같은 문의를 로그로 바로 확인 (사례 4)</td></tr>
+          <tr><td>API 호출 정리</td><td>그리드·그래프 페이지가 같은 API를 여러 번 부르던 것을 렌더링에 필요한 데이터를 한 번에 받도록 변경</td><td>같은 값을 반복 조회하던 서버 요청을 줄임</td></tr>
+          <tr><td>데이터 보관</td><td>매일 DB 전체 dump를 서버 디스크에 받아 SFTP로 저장 서버에 전송, 6개월 지난 백업은 다른 디스크로 이동, 3년 지나면 순차 삭제. 운영 데이터는 3개월(요청 시 6개월) 단위로 백업 파일로 분리</td><td>날짜를 바꿔 가며 보관·삭제 동작을 검증했고, 테스트 서버 요청 때 dump로 운영과 같은 DB를 복원해 백업이 실제로 복원되는 것을 확인 (사례 5)</td></tr>
+        </tbody>
+      </table>
+    </div>
+      </div></div>
       <div class="part"><h3>트러블슈팅</h3><div>
         <article class="case">
       <div class="case-head">
@@ -615,6 +638,7 @@ td .mine-tech { color: var(--muted); }
             <li>센서 로직이 연결을 스스로 끊지 않아, 서버가 데이터를 받으면 바로 연결을 끊도록 예외 처리를 추가해 TCP 단기 연결로 전환</li>
             <li>센서에 보내던 응답 메시지를 없애 연결마다 드는 처리 부담을 줄임</li>
             <li>데이터 없이 연결만 붙잡는 센서는 10초 타임아웃으로 정리</li>
+            <li>단기 연결로 바꾼 뒤에도 저장 후 연결을 끊고 포트를 돌려받는 속도가 데이터가 들어오는 속도를 따라가지 못해 포트가 부족해짐 → 수신 처리를 멀티스레드로 바꾸고 수집 컨테이너를 여러 개로 나눔</li>
             <li>묶어서 저장하는 bulk_insert도 구현해 비교했지만, 이상 감지가 늦어지지 않고 장애 시 모아둔 데이터를 잃지 않도록 건당 저장을 유지하고 처리량은 컨테이너 증설로 확보</li>
             <li>5초마다 새로 연결하므로 Nginx 로드밸런서가 요청마다 다른 수집 컨테이너로 고르게 분산할 수 있게 됨</li>
                         <li>부하를 보고 내부 IP·포트를 하나씩 늘려 수집 컨테이너를 자동으로 추가, DB 커넥션도 함께 조정</li>
@@ -644,14 +668,66 @@ td .mine-tech { color: var(--muted); }
         <div><dt>지금이라면</dt><dd>DB를 컨테이너로 운영하며 포기한 자동 백업·장애 전환을 비용과 함께 표로 비교해, 서비스가 커지는 시점에 RDS로 옮길 기준을 미리 정해 두겠습니다.</dd></div>
       </dl>
     </article>
+        <article class="case">
+      <div class="case-head">
+        <span class="tag">사례 3</span>
+        <h3>한 나라에서만 DB가 뜨지 않던 장애를 리전별 버전 차이에서 찾아 이미지 버전 고정으로 해결</h3>
+      </div>
+      <dl class="case-body">
+        <div><dt>증상</dt><dd>센서 송신과 수신 서버 수신은 정상인데 데이터 저장이 실패했고, PostgreSQL 컨테이너에 접속할 수 없었습니다.</dd></div>
+        <div><dt>추적</dt><dd>
+          <ul>
+            <li>Docker 문제로 보고 컨테이너를 멈췄다 다시 띄우고 DB도 재시작했지만 그대로 접속 불가</li>
+            <li>다른 나라 서버는 같은 구성인데도 정상 수신 중인 것을 발견</li>
+            <li>로그를 비교하다, 정상인 나라 서버에서도 문제 서버와 같은 DB 이미지를 띄우면 똑같이 실패하는 것을 확인</li>
+            <li>리전별로 Ubuntu·Docker·PostgreSQL 버전을 비교하니 모두 제각각이었고, 최근에 만든 서버일수록 최신 버전</li>
+          </ul>
+        </dd></div>
+        <div><dt>원인</dt><dd>DB 이미지를 <code>latest</code> 태그로 받고 있어, 서버를 만든 시점마다 다른 버전이 설치돼 있었습니다.</dd></div>
+        <div><dt>해결</dt><dd>전 리전의 버전을 하나로 통일하고 이미지 태그를 특정 버전으로 고정했습니다. 장애 경위와 조치를 문서로 남겨 팀에 공유했습니다.</dd></div>
+        <div><dt>배운 점</dt><dd>"같은 구성"이라고 생각한 서버도 만든 시점에 따라 달라질 수 있다는 것. 이후로는 이미지와 패키지 버전을 명시하고, 정상 환경과 장애 환경을 나란히 놓고 비교하는 것부터 시작합니다.</dd></div>
+      </dl>
+    </article>
+        <article class="case">
+      <div class="case-head">
+        <span class="tag">사례 4</span>
+        <h3>"로그인이 안 된다"는 문의를 보안 로그로 추적해 공유 데모 계정 운영 방식을 바꿈</h3>
+      </div>
+      <dl class="case-body">
+        <div><dt>상황</dt><dd>고객이 데모 계정에 로그인이 안 된다고 메일로 문의했습니다.</dd></div>
+        <div><dt>원인</dt><dd>직접 만든 보안 로깅 모듈에서 마지막 로그인 날짜·IP와 실패 사유를 확인하니, 다른 곳에서 다른 사용자가 비밀번호를 바꿔 쓰고 있었고 문의자는 이전 비밀번호로 반복 시도하다 계정이 잠긴 상태였습니다. 여러 사람이 하나의 데모 계정을 함께 쓰는 구조가 근본 원인이었습니다.</dd></div>
+        <div><dt>조치</dt><dd>다른 곳에서 로그인한 기록을 알리고 비밀번호 변경을 안내했습니다.</dd></div>
+        <div><dt>재발 방지</dt><dd>고객사마다 관리자 계정 1개와 데모 계정 1개를 함께 지급하고, 데모 계정이 잠기면 관리자가 직접 잠금을 풀 수 있게 바꿨습니다.</dd></div>
+        <div><dt>지금이라면</dt><dd>데모 계정을 사용자별로 발급하고 비밀번호 변경 권한을 막아, 공유 계정 자체를 없애겠습니다.</dd></div>
+      </dl>
+    </article>
+        <article class="case">
+      <div class="case-head">
+        <span class="tag">사례 5</span>
+        <h3>센서 데이터 누적으로 느려진 저사양 서버를 보관 정책과 백업 배치로 정리</h3>
+      </div>
+      <dl class="case-body">
+        <div><dt>증상</dt><dd>센서 2,000대 이상이 5초마다 보내는 데이터(하루 약 3천만 건 규모)가 DB에 계속 쌓이면서 디스크가 부족해지고, DB 조회와 서버 전체가 느려졌습니다.</dd></div>
+        <div><dt>해결</dt><dd>
+          <ul>
+            <li>운영 데이터를 3개월 단위(요청이 있으면 6개월)로 백업 파일로 빼내는 Shell Script 배치 구현. 필요하면 SQL import로 다시 조회</li>
+            <li>매일 DB 전체 dump를 서버 하드디스크에 받고 SFTP로 저장 서버에 전송, 6개월 지난 백업은 다른 하드디스크로 이동, 3년 지나면 순차 삭제</li>
+            <li>날짜 단위로 시뮬레이션해 3년 뒤에도 이동·삭제가 정상 동작하는지 검증</li>
+          </ul>
+        </dd></div>
+        <div><dt>결과</dt><dd>사양이 낮은 데모·POC 서버(해외, 지자체)에서 속도가 눈에 띄게 좋아졌습니다. 테스트 서버 요청을 받았을 때 AWS 이미지와 dump로 운영과 같은 환경을 복원해 제공하면서, 백업이 실제로 복원된다는 것도 확인했습니다.</dd></div>
+        <div><dt>지금이라면</dt><dd>전후 디스크 사용률과 조회 시간을 수치로 남기고, 시간 기준 파티셔닝으로 오래된 데이터를 테이블째 분리하며, 백업은 S3 같은 외부 저장소에도 두겠습니다.</dd></div>
+      </dl>
+    </article>
       </div></div>
       <div class="part"><h3>기술</h3><div>
-        <p class="stack">Python · Java · Spring Boot · Spring Batch · NestJS · PostgreSQL · Nginx · Docker · Docker Compose · AWS(EC2·Route53·IAM) · Prometheus · Grafana · Zabbix · React · Next.js · Shell Script</p>
+        <p class="stack">Python · Java · Spring Boot · Spring Batch · NestJS · TypeORM · PostgreSQL · Nginx · Docker · Docker Compose · AWS(EC2·Route53·IAM) · Prometheus · Grafana · Zabbix · React · Next.js · Shell Script</p>
       </div></div>
       <div class="part"><h3>배운 점</h3><div>
         <div class="lesson"><dl>
           <div><dt>부족했던 점</dt><dd>관리자 화면을 "정해진 흐름대로만 쓸 것"이라 보고 수정·삭제는 기본 기능만 넣었습니다. 여러 경우에 맞춘 세부 기능이 없어 데이터 수정·삭제 요청이 올 때마다 DB에 직접 접속하거나 시스템을 잠시 멈춰야 했고, 전시회 현장에서는 시연에 참여하지 못하고 하루 종일 노트북으로 AWS에 들어가 데이터를 수정했습니다.</dd></div>
           <div><dt>바꾼 것</dt><dd>운영 중에 생길 수정·삭제 요청을 미리 예상해 관리자 화면에서 처리하게 만들고, 변경 내용은 모두 로그로 남기며, 중요한 데이터는 화면에서 막거나 특정 권한 계정만 처리하도록 나눴습니다. 운영 안정성은 서버뿐 아니라 관리 화면과 운영 방식까지 포함한다는 걸 배웠습니다.</dd></div>
+          <div><dt>남은 숙제</dt><dd>배포는 컨테이너가 새 이미지를 받아 다시 뜨는 방식이라, 웹 화면은 유지됐지만 데이터 갱신이 10~15분, 웹서버 배포 때는 화면이 5~10분 멈췄습니다. 지금이라면 컨테이너를 하나씩 교체하는 롤링 배포나 블루·그린 배포로 중단 없이 바꾸고, 이전 이미지 태그로 바로 되돌리는 롤백 절차를 두겠습니다. 테스트도 API를 직접 호출해 확인하는 수준이었기 때문에, 지금이라면 핵심 API에 Jest·Supertest 자동화 테스트를 붙여 배포 전에 CI에서 돌리겠습니다.</dd></div>
         </dl></div>
       </div></div>
   </section>
